@@ -5,6 +5,7 @@ import fs from 'fs'
 import path from 'path'
 
 import express from 'express'
+let cors = require('cors')
 
 import bodyParser from 'body-parser'
 import {graphiqlExpress, graphqlExpress} from 'apollo-server-express'
@@ -19,12 +20,13 @@ const options = {
 
 const app = express()
 
+app.use(cors())
 app.use('/graphql', bodyParser.json(), graphqlExpress({schema}))
 app.use('/graphiql', graphiqlExpress({endpointURL: '/graphql'}))
 
 const server = https.createServer(options, app)
 
 server.listen(port, () => {
-  console.log('Server running on https://localhost:3000')
-  console.log('Go to https://localhost:3000/graphiql for execute query`s')
+  console.log('Server running on https://localhost:4000/graphql')
+  console.log('Go to https://localhost:4000/graphiql for execute query`s')
 })

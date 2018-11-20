@@ -1,22 +1,24 @@
 import {makeExecutableSchema} from 'graphql-tools'
-import {registerEvent, searchAllEvent, searchEventById, searchEventByLocal} from "./BD";
+import * as BD from "./BD";
 
 const typeDefs = `
-  type Query { events: [Event], event(_id: ID!): Event, eventByLocal(local: String!): Event}
-  type Event { local: String, author: String }
+  type Query { events: [Event], eventById(_id: ID!): Event, eventByLocal(local: String!): Event}
+  type Event { _id: String, local: String, author: String }
   type Mutation {
-    registerEvent (local: String!, author: String!): Boolean
+    registerEvent (local: String!, author: String!): Event,
+    updateEvent (_id:ID!, local: String, author: String): Event
   }
 `
 
 const resolvers = {
   Query: {
-    events: () => searchAllEvent(),
-    event: (root, _id) => searchEventById(_id),
-    eventByLocal: (root, {local}) => searchEventByLocal({local})
+    events: () => BD.searchAllEvent(),
+    eventById: (root, _id) => BD.searchEventById(_id),
+    eventByLocal: (root, {local}) => BD.searchEventByLocal({local})
   },
   Mutation: {
-    registerEvent: (root, event) => registerEvent(event)
+    registerEvent: (root, {local, author}) => BD.registerEvent({local, author}),
+    updateEvent: (root, {_id, local, author}) => BD.updateEvent(_id, {local, author})
   }
 }
 

@@ -23,9 +23,19 @@ let db
 
 const COL_EVENTOS = 'eventos'
 
-async function registerEvent(event) {
+async function registerEvent({local, author}) {
   const col = db.collection(COL_EVENTOS)
-  await col.insertOne(event)
+  await col.insertOne({local, author})
+}
+
+async function updateEvent(id, {local, author}) {
+  const col = bd.collection(COL_EVENTOS)
+  await col.updateOne({_id: Object(id)}, {
+    $set: {
+      local: local,
+      author: author
+    }
+  })
 }
 
 async function searchAllEvent() {
@@ -59,6 +69,7 @@ async function searchEventByLocal({local}) {
 
 export {
   registerEvent,
+  updateEvent,
   searchAllEvent,
   searchEventById,
   searchEventByLocal
