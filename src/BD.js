@@ -1,4 +1,4 @@
-import MongoClient from 'mongodb'
+import {MongoClient, ObjectId} from 'mongodb'
 
 const BD_URL = process.env.BD_URL
 let client
@@ -23,17 +23,17 @@ let db
 
 const COL_EVENTOS = 'eventos'
 
-async function registerEvent({local, author}) {
+async function registerEvent(event) {
   const col = db.collection(COL_EVENTOS)
-  await col.insertOne({local, author})
+  await col.insertOne(event)
 }
 
-async function updateEvent(id, {local, author}) {
-  const col = bd.collection(COL_EVENTOS)
+async function updateEvent(id, event) {
+  const col = db.collection(COL_EVENTOS)
   await col.updateOne({_id: Object(id)}, {
     $set: {
-      local: local,
-      author: author
+      local: event.local,
+      author: event.author
     }
   })
 }
@@ -45,10 +45,9 @@ async function searchAllEvent() {
 }
 
 
-async function searchEventById(_id) {
+async function searchEventById(id) {
   const col = db.collection(COL_EVENTOS)
-  const result = await col.findOne(_id)
-
+  const result = await col.findOne({_id: ObjectId(id)})
   if (result) {
     return result
   }
