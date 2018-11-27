@@ -26,6 +26,7 @@ const COL_EVENTOS = 'eventos'
 async function registerEvent(event) {
   const col = db.collection(COL_EVENTOS)
   await col.insertOne(event)
+  console.log(col)
 }
 
 async function updateEvent(id, event) {
