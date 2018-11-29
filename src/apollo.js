@@ -6,7 +6,8 @@ const typeDefs = `
   type Event { _id: String, local: String, author: String }
   type Mutation {
     registerEvent (local: String!, author: String!): Event,
-    updateEvent (id: ID!, local: String!, author: String!): Event
+    updateEvent (_id: ID!, local: String!, author: String!): Event,
+    deleteEventById (_id: ID!): Boolean
   }
 `
 
@@ -18,7 +19,8 @@ const resolvers = {
   },
   Mutation: {
     registerEvent: (root, event) => BD.registerEvent(event),
-    updateEvent: (root, _id, event) => BD.updateEvent(_id, event)
+    updateEvent: (root, {_id}, event) => BD.updateEvent(_id, event),
+    deleteEventById: (root, {_id}) => BD.deleteEventById(_id)
   }
 }
 

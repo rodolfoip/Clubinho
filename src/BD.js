@@ -25,13 +25,13 @@ const COL_EVENTOS = 'eventos'
 
 async function registerEvent(event) {
   const col = db.collection(COL_EVENTOS)
-  await col.insertOne(event)
-  console.log(col)
+  const result = await col.insertOne(event)
+  return result
 }
 
 async function updateEvent(id, event) {
   const col = db.collection(COL_EVENTOS)
-  await col.updateOne({_id: Object(id)}, {
+  await col.updateOne({_id: ObjectId(id)}, {
     $set: {
       local: event.local,
       author: event.author
@@ -42,6 +42,7 @@ async function updateEvent(id, event) {
 async function searchAllEvent() {
   const col = db.collection(COL_EVENTOS)
   const results = await col.find().toArray()
+
   return results
 }
 
@@ -49,27 +50,28 @@ async function searchAllEvent() {
 async function searchEventById(id) {
   const col = db.collection(COL_EVENTOS)
   const result = await col.findOne({_id: ObjectId(id)})
-  if (result) {
-    return result
-  }
 
-  return null
+  return result
 }
 
 async function searchEventByLocal({local}) {
   const col = db.collection(COL_EVENTOS)
   const result = await col.findOne({local})
 
-  if (result) {
-    return result
-  }
+  return result
+}
 
-  return null
+async function deleteEventById(id) {
+  const col = db.collection(COL_EVENTOS)
+  const result = await col.deleteOne({_id: ObjectId(id)})
+
+  return result
 }
 
 export {
   registerEvent,
   updateEvent,
+  deleteEventById,
   searchAllEvent,
   searchEventById,
   searchEventByLocal
