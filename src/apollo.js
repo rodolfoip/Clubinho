@@ -19,7 +19,7 @@ const resolvers = {
   },
   Mutation: {
     registerEvent: (root, event) => BD.registerEvent(event),
-    updateEvent: (root, {_id}, event) => BD.updateEvent(_id, event),
+    updateEvent: (root, event) => BD.updateEvent(event),
     deleteEventById: (root, {_id}) => BD.deleteEventById(_id)
   }
 }
