@@ -27,6 +27,6 @@ app.use('/graphiql', graphiqlExpress({endpointURL: '/graphql'}))
 const server = https.createServer(options, app)
 
 server.listen(port, () => {
-  console.log('Server running on https://localhost:4000/graphql')
-  console.log('Go to https://localhost:4000/graphiql for execute query`s')
+  console.log('Server running on https://dev.rodolfo:4000/graphql')
+  console.log('Go to https://dev.rodolfo:4000/graphiql for execute query`s')
 })
