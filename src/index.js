@@ -14,8 +14,8 @@ import schema from './apollo'
 
 const port = process.env.PORT
 const options = {
-  key: fs.readFileSync(path.join(__dirname, '../cert/key.pem')),
-  cert: fs.readFileSync(path.join(__dirname, '../cert/cert.pem')),
+  key: fs.readFileSync(path.join(__dirname, '../cert/server.key')),
+  cert: fs.readFileSync(path.join(__dirname, '../cert/server.cert'))
 }
 
 const app = express()
